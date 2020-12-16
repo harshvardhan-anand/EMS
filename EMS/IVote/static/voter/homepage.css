@@ -1,0 +1,49 @@
+#btnscont {
+    display: flex;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.btns {
+    margin: 1rem 2rem;
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    background-image: linear-gradient(
+        to right,
+        #f09819 0%,
+        #edde5d 51%,
+        #f09819 100%
+    );
+    text-align: center;
+    transition: 0.3s;
+    background-size: 200% auto;
+    color: #121212;
+    box-shadow: 0 0 10px #333;
+}
+
+.btns:hover {
+    background-position: right center; /* change the direction of the change here */
+}
+
+h1 {
+    font-size: 3.5rem;
+    color: white;
+    position: absolute;
+    top: 35%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-shadow: 0 0 5px #999;
+}
+
+#alert {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2rem auto;
+}
+
+#alert h3 {
+    border: 1px solid dodgerblue;
+    display: none;
+}

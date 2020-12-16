@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block title %}Candidate Registration{% endblock %}
+
+{% block message %}
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'candi_register:register' %}" method="post">
+        {{form.as_p}}
+        {% csrf_token %}
+        <input type="submit" value="Register">
+    </form>
+{% endblock content %}

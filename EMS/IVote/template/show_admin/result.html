@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+
+{% extends 'base.html' %} {% load static %} {% block title %}Result {%endblock%}
+{% block result %}
+
+<div id="resultpg">
+    <h1>Winners</h1>
+    <hr />
+    <div>
+        <ul class="list-group list-group-flush">
+            {% for position, candidate in result.items %}
+            <li class="list-group-item list-group-item-dark">
+                <b>{{position}}</b> - {{candidate}} <small>(username - {{candidate.user_profile}})</small>
+                <br>
+                <b>Votes Received: </b>{{candidate.result}} 
+            </li>
+            <br />
+            {% endfor %}
+        </ul>
+        <div id="back">
+            <a
+                class="btn btn-light button-custom"
+                href="{% url 'show_admin:admin' %}"
+                >Back</a
+            >
+        </div>
+    </div>
+</div>
+<style>
+    body {
+        background: #0f2027; /* fallback for old browsers */
+        background: -webkit-linear-gradient(
+            to right,
+            #2c5364,
+            #203a43,
+            #0f2027
+        ); /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
+    }
+    .button-custom {
+        margin: 1rem;
+        padding: 0.7rem 3rem;
+        border-radius: 15px;
+        background-image: linear-gradient(
+            to right,
+            #f09819 0%,
+            #edde5d 51%,
+            #f09819 100%
+        );
+        text-align: center;
+        transition: 0.3s;
+        background-size: 200% auto;
+        color: #121212;
+        box-shadow: 0 0 5px #333;
+    }
+    .button-custom:hover {
+        color: #121212;
+        background-position: right center;
+    }
+    h1 {
+        margin-top: 3rem;
+        color: #fff;
+        text-shadow: 0 0 2px black;
+    }
+    hr {
+        border-top: 1px solid white;
+    }
+    #back {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+</style>
+
+{% endblock %}

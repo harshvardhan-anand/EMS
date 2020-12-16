@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+{% block nav %} <a href="{% url "voter:homepage" %}">Homepage</a> {% endblock %}
+{% block content %}
+    <h1>Login</h1>
+    {{response}} {% comment %} Error Message {% endcomment %}
+    <form action="{% url 'user_auth:login' %}" method='POST'>
+        {{form.as_p}}
+        {% csrf_token %}
+        <input type="submit" value="Login">
+    </form>
+{% endblock content %}

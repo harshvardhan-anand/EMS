@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang = "en">
+    <head>
+        <meta charset  = "UTF-8">
+     <title>Voting Portal</title>
+    <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+    <link rel="stylesheet" href="{% static 'voter/homepage.css' %}"> 
+    <style>
+    body{
+        background-image:url("{% static 'voter/smitimg2.jpg' %}");
+        background-size: 100vw 100vh;
+    }
+    .overlay{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: #000;
+        opacity: 0.5;
+        z-index: -1;
+    }
+</style>
+    </head>
+<body>
+
+<div id="backgroundimg">
+    <header id="logo">
+    <img src="{% static 'voter/smitlogo.png' %}" alt="Smit logo" class ="img-responsive img-circle"/>
+    </header>
+    <div id="alert" >
+        <h3 id="alert-message" class="alert alert-info"></h3>
+    </div>
+    <h1>SMIT VOTING PORTAL</h1>
+    <div id="btnscont">
+        <a href="{% url 'show_admin:admin' %}">
+            <button id="admin" class ="btn btn-light btns" >Admin Login</button>
+        </a>
+
+
+        <a href="{% url 'voter:vote' %}">
+            <button id="vote" class = "btn btn-light btns">Vote/Register</button>
+        </a>
+
+        <a href="{% url 'show_admin:result' %}">
+            <button id="result" class="btn btn-light btns">View Results </button></a>
+    </div> 
+    <div class="overlay"></div>
+</div>
+
+</div>  
+{% block message %}
+    {% for message in messages %}
+    <script>
+        let alertBox = document.getElementById("alert-message");
+        alertBox.style.display = "block";
+        alertBox.textContent = "{{message|safe}}";
+       
+        setTimeout(()=> {
+            let intervalId = setInterval(()=> {
+            let opacity = Number(window.getComputedStyle(alertBox) 
+                             .getPropertyValue("opacity")); 
+            if (opacity > 0) { 
+                opacity -= 0.1; 
+                alertBox.style.opacity = opacity 
+            }
+            else{
+                alertBox.style.display = "none";
+                clearInterval(intervalId);
+            }
+        }, 50)
+        }, 3000);
+    </script>
+    {% endfor %}
+{% endblock message %}  
+
+</body>
+
+
+
+</html>

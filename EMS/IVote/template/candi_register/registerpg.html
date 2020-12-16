@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Register Page</title>
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+            crossorigin="anonymous"
+        />
+    </head>
+
+    <body class="container">
+        <h1>Candidate Registration</h1>
+        <hr />
+        <div class="form-container">
+            <form
+                action="{% url 'candi_register:register' %}"
+                name="StudentRegistration"
+                onSubmit="return(validate());"
+                method="POST"
+            >
+                {% csrf_token %}
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Name</label>
+                    <div class="col-sm-8">
+                        <input
+                            type="text"
+                            name="textnames"
+                            id="textname"
+                            class="form-control"
+                            placeholder="Enter Your Name"
+                            required
+                        />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                        >Registration No.</label
+                    >
+                    <div class="col-sm-8">
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="regno"
+                            id="regno"
+                            placeholder="Enter Your Registration No"
+                            required
+                        />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Email Id</label>
+                    <div class="col-sm-8">
+                        <input
+                            type="email"
+                            class="form-control"
+                            name="emailid"
+                            id="emailid"
+                            placeholder="Enter Your College Mail Id"
+                            required
+                        />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Department</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="dept">
+                            <option value="-1" selected>
+                                Select your Department
+                            </option>
+
+                            <option value="cse">CS</option>
+
+                            <option value="it">IT</option>
+
+                            <option value="ec">EC</option>
+
+                            <option value="ee">EE</option>
+                            <option value="me">ME</option>
+
+                            <option value="ce">CE</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Semester</label>
+                    <div class="col-sm-8">
+                        <input
+                            type="text"
+                            readonly
+                            class="form-control-plaintext"
+                            value="5th Semester"
+                            style="color: #fff"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">Date of Birth</label>
+                    <div class="col-sm-8">
+                        <input
+                            type="date"
+                            id="start-date"
+                            name="start_date"
+                            id="dob"
+                            class="form-control"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label">CGPA</label>
+                    <div class="col-sm-8">
+                        <input
+                            type="text"
+                            name="cgpa"
+                            id="cgpa"
+                            class="form-control"
+                            required
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                        >Current Position (if any)</label
+                    >
+                    <div class="col-sm-8">
+                        <input
+                            type="text"
+                            name="currentpos"
+                            id="currentpos"
+                            class="form-control"
+                        />
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                        >Position (to apply)</label
+                    >
+                    <div class="col-sm-8">
+                        <select name="position" class="form-control" required>
+                            <option value="-1" selected>
+                                Select an option
+                            </option>
+
+                            <option value="Vice President">
+                                Vice President
+                            </option>
+
+                            <option value="General Secretary">
+                                General Secretary
+                            </option>
+
+                            <option value="Literary Secretary">
+                                Literary Secretary
+                            </option>
+
+                            <option value="Cultural Secretary">
+                                Cultural Secretary
+                            </option>
+
+                            <option value="Sports Secretary">
+                                Sports Secretary
+                            </option>
+
+                            <option value="Girls Mess Secretary">
+                                Girls Mess Secretary
+                            </option>
+
+                            <option value="Boys Mess Secretary">
+                                Boys Mess Secretary
+                            </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-4 col-form-label"
+                        >Write in less than 300 words, why one should vote you?
+                    </label>
+                    <div class="col-sm-8">
+                        <textarea
+                            rows="5"
+                            name="feedback"
+                            class="form-control"
+                            required
+                        ></textarea>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-light btn-custom" type="submit">
+                        Submit
+                    </button>
+                    <button class="btn btn-light btn-custom" type="reset">
+                        Reset
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <style>
+            body {
+                background: #0f2027; /* fallback for old browsers */
+                background: -webkit-linear-gradient(
+                    to right,
+                    #2c5364,
+                    #203a43,
+                    #0f2027
+                ); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(
+                    to right,
+                    #2c5364,
+                    #203a43,
+                    #0f2027
+                ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                color: #fff;
+            }
+            .button-group {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .btn-custom {
+                margin: 1rem 2rem;
+                padding: 0.7rem 3.5rem;
+                border-radius: 15px;
+                background-image: linear-gradient(
+                    to right,
+                    #f09819 0%,
+                    #edde5d 51%,
+                    #f09819 100%
+                );
+                text-align: center;
+                transition: 0.3s;
+                background-size: 200% auto;
+                color: #121212;
+                box-shadow: 0 0 10px #333;
+            }
+            .btn-custom:hover {
+                background-position: right center;
+            }
+            .form-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            h1 {
+                margin-top: 3rem;
+                color: #fff;
+                text-shadow: 0 0 2px black;
+            }
+            hr {
+                border-top: 1px solid rgb(150, 150, 150);
+            }
+            form {
+                margin: 2rem;
+            }
+        </style>
+    </body>
+</html>

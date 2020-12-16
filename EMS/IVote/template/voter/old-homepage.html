@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+
+{% block nav %}
+    <a href="{% url 'voter:vote' %}">Vote</a>
+    {% if show_result_tab %}
+        <a href="{% url 'voter:result' %}">Result</a>
+    {% endif %}    
+{% endblock nav %}
+
+{% block message %}
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+{% endblock message %}
+
+{% block content %}
+    <h1>This is homepage</h1>
+{% endblock content %}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+{% extends 'base.html' %} 
+{% block title %}Vote{% endblock %} 
+{% block content %}
+<div class="overlay"></div>
+
+<div class="container">
+    {{response}} {% for message in messages %}{{message}}{% endfor %}
+    <h1>Welcome to the Election Portal</h1>
+    <hr />
+  
+    <form action="{% url 'voter:voted' %}" method="post">
+        {% csrf_token %} 
+        {% if show_candidate %} 
+            {%for position, candidates in all_candidates.items %} 
+                {% if candidates|length %}
+        <br />
+        <h3>{{position}}</h3>
+
+        {% for candidate in candidates %}
+        <div>
+            <input
+                type="radio"
+                name="{{position}}"
+                value="{{candidate.regno}}"
+            />
+            {{candidate}}
+        </div>
+        {% endfor %}
+        <hr />
+        {% endif %} 
+        {% endfor %} 
+        {% endif %}
+        
+        <div id="btn-group">
+            <div>
+                
+            {%if show_candidate%}
+            {% if register_input %}
+            
+            <input
+            type="submit"
+            value="Register Your Vote"
+            id="regvote"
+            class="btn btn-light"
+            />
+            {% endif %} 
+            {%endif%}
+                
+            </div>
+           
+            <div>
+                  {%if show_tab %}
+<a class="btn btn-success button-custom" href="{% url 'candi_register:register' %}">Register</a>
+{% endif %}
+            </div>
+             <div>
+
+                <a class="btn btn-danger button-custom" href="{% url 'user_auth:logout' %}" id="logout">Logout</a>
+            </div>
+        </div>
+        <style>
+            body {
+                height: 100%;
+                background: #0f2027; /* fallback for old browsers */
+                background: -webkit-linear-gradient(
+                    to right,
+                    #2c5364,
+                    #203a43,
+                    #0f2027
+                ); /* Chrome 10-25, Safari 5.1-6 */
+                background: linear-gradient(
+                    to right,
+                    #2c5364,
+                    #203a43,
+                    #0f2027
+                ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+                color: #fff;
+            }
+            h1 {
+                text-align: center;
+                margin-top: 3rem;
+                color: #fff;
+                text-shadow: 0 0 2px black;
+            }
+            input[type="submit"] {
+                padding: 0.7rem 3rem;
+                border-radius: 15px;
+                background-image: linear-gradient(
+                    to right,
+                    #f09819 0%,
+                    #edde5d 51%,
+                    #f09819 100%
+                );
+                text-align: center;
+                transition: 0.3s;
+                background-size: 200% auto;
+                color: #121212;
+                box-shadow: 0 0 5px #333;
+            }
+            input[type="submit"]:hover {
+                color: #121212;
+                background-position: right center; /* change the direction of the change here */
+            }
+            input:disabled:hover {
+                background-position: inherit;
+            }
+            .button-custom {
+        width: 200px;
+        margin: 1rem;
+        border: 1px solid white;
+        border-radius: 15px;
+        padding: 0.7rem 3rem;
+    }
+    .button-custom:hover {
+        border: 1px solid white;
+    }
+    #btn-group{
+        margin-top: 5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    hr{
+        border-top: 1px solid rgb(3, 115, 153);
+    }
+        </style>
+    </form>
+
+    <script>
+        let buttonGroup = document.getElementById("btn-group");
+        if ("{{show_tab}}"=="False"){
+            buttonGroup.style.marginTop = "0";
+            buttonGroup.style.flexDirection = "row";
+        }
+    </script>
+</div>
+{% endblock content %}

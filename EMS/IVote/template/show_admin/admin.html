@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+{% extends 'base.html' %} 
+{% load static %} 
+{% block title %}Admin{%endblock%}
+{% block content %}
+<style>
+    .status-message {
+        margin: 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    #status {
+        border: 1px solid orange;
+        width: 80vw;
+        text-align: center;
+    }
+    input[type="submit"] {
+        padding: 0.7rem 3rem;
+        border-radius: 15px;
+        background-image: linear-gradient(
+            to right,
+            #f09819 0%,
+            #edde5d 51%,
+            #f09819 100%
+        );
+        text-align: center;
+        transition: 0.3s;
+        background-size: 200% auto;
+        color: #121212;
+        box-shadow: 0 0 5px #333;
+    }
+    input[type="submit"]:hover {
+        color: #121212;
+        background-position: right center; /* change the direction of the change here */
+    }
+    input:disabled:hover {
+        background-position: inherit;
+    }
+    body {
+        background-image: url("{% static 'show_admin/smitimg.jpg' %}");
+        background-size: cover;
+    }
+    .button-custom {
+        border: 1px solid white;
+        border-radius: 15px;
+        padding: 0.7rem 3rem;
+    }
+    .button-custom:hover {
+        border: 1px solid white;
+    }
+    .logout {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    a {
+        width: 200px;
+        text-decoration: none;
+        font-size: medium;
+        text-align: center;
+        color: #fff;
+    }
+    a:hover {
+        text-decoration: none;
+        color: #fff;
+    }
+    #form {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .form-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 3rem 0;
+    }
+    .form-button input {
+        margin: 0 2rem;
+    }
+    h1 {
+        margin-top: 3rem;
+        color: #fff;
+        text-shadow: 0 0 2px black;
+    }
+    #alert {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 10%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    #alert h3 {
+        border: 1px solid red;
+        display: none;
+    }
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: #000;
+        opacity: 0.5;
+        z-index: -1;
+    }
+    hr {
+        border-top: 1px solid #ccc;
+    }
+</style>
+<div id="alert">
+    <h3 id="alert-box" class="alert alert-danger">Script cannot load. Ensure Javascript is enabled.</h3>
+</div>
+<h1>Welcome, Admin</h1>
+<hr />
+<div id="form">
+    <form action="{% url 'show_admin:operation' %}" method="POST">
+        {% csrf_token %}
+        <div class="form-button">
+            <input
+                type="submit"
+                name="next"
+                value="Start Election"
+                class="admin-button btn btn-light"
+                id="election-control"
+            />
+            <input
+                type="submit"
+                name="next"
+                value="Start Polling"
+                class="admin-button btn btn-light"
+                id="polling-control"
+            />
+        </div>
+    </form>
+    <div class="status-message">
+        <h3 id="status" class="alert">Current Status: {{status}}</h3>
+    </div>
+    <div class="logout">
+        <a
+            class="btn btn-danger button-custom"
+            href="{% url 'user_auth:logout' %}"
+            >Logout</a
+        >
+    </div>
+
+    <script>
+        let statusMessage = document.getElementById("status");
+        let electionControl = document.getElementById("election-control");
+        let pollingControl = document.getElementById("polling-control");
+        if ("{{status}}" === "registration-time") {
+            pollingControl.value = "Start Polling";
+            pollingControl.disabled = false;
+            electionControl.disabled = true;
+            statusMessage.textContent = "Registration is in progress";
+            statusMessage.classList.add("alert-primary");
+            console.log(statusMessage);
+        } else if ("{{status}}" === "stop-election") {
+            electionControl.value = "Stop Election";
+            pollingControl.disabled = true;
+            electionControl.disabled = false;
+            statusMessage.textContent = "Results Declared";
+            statusMessage.classList.add("alert-info");
+            console.log(statusMessage);
+        } else if ("{{status}}" === "polling") {
+            pollingControl.value = "Stop Polling";
+            pollingControl.disabled = false;
+            electionControl.disabled = true;
+            statusMessage.textContent = "The polling is in progress";
+            statusMessage.classList.add("alert-success");
+            console.log(statusMessage);
+        } else if ("{{status}}" === "no-active-election") {
+            electionControl.value = "Start Election";
+            pollingControl.disabled = true;
+            electionControl.disabled = false;
+            statusMessage.textContent = "No active Election in progress";
+            statusMessage.classList.add("alert-warning");
+            console.log(statusMessage);
+        }
+        let alertBox = document.getElementById("alert-box");
+        if ("{{message}}" !== "None") {
+            alertBox.style.display = "block";
+        }
+
+        alertBox.textContent = "{{message|safe}}";
+
+        setTimeout(() => {
+            let intervalId = setInterval(() => {
+                let opacity = Number(
+                    window
+                        .getComputedStyle(alertBox)
+                        .getPropertyValue("opacity")
+                );
+                if (opacity > 0) {
+                    opacity -= 0.1;
+                    alertBox.style.opacity = opacity;
+                } else {
+                    alertBox.style.display = "none";
+                    clearInterval(intervalId);
+                }
+            }, 50);
+        }, 2000);
+    </script>
+</div>
+<div class="overlay"></div>
+{% endblock content %}
