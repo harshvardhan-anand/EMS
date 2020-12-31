@@ -1,4 +1,4 @@
-# Team Number 27 - IVOTED
+# Secure Election Management System
 
 ### Project Overview
 
